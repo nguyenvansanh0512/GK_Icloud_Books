@@ -1,0 +1,79 @@
+<h1>Quản lý sách</h1>
+
+<p>Mã sách phải bắt đầu bằng: <strong>{{prefix}}</strong></p>
+<p>Thuế VAT: <strong>{{vatPercent}}%</strong></p>
+<p>Phiên làm việc bắt đầu: {{startedAt}}</p>
+
+<h2>Thêm sách</h2>
+
+<form action="/books" method="POST">
+  <input
+    type="hidden"
+    name="csrfToken"
+    value="{{csrfToken}}"
+  >
+
+  <label for="code">Mã sách</label>
+  <input
+    id="code"
+    name="code"
+    placeholder="Ví dụ: 232001"
+    maxlength="50"
+    required
+  >
+
+  <label for="title">Tên sách</label>
+  <input
+    id="title"
+    name="title"
+    maxlength="200"
+    required
+  >
+
+  <label for="price">Giá trước thuế (VNĐ)</label>
+  <input
+    id="price"
+    name="price"
+    type="number"
+    min="0"
+    max="1000000000"
+    step="1"
+    required
+  >
+
+  <button type="submit">Thêm sách</button>
+</form>
+
+<h2>Danh sách sách</h2>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Mã sách</th>
+        <th>Tên sách</th>
+        <th>Giá trước thuế</th>
+        <th>VAT</th>
+        <th>Tiền thuế</th>
+        <th>Giá sau thuế</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each books}}
+        <tr>
+          <td>{{code}}</td>
+          <td>{{title}}</td>
+          <td>{{money price}} đ</td>
+          <td>{{vatPercent}}%</td>
+          <td>{{money taxAmount}} đ</td>
+          <td>{{money priceAfterTax}} đ</td>
+        </tr>
+      {{else}}
+        <tr>
+          <td colspan="6">Chưa có sách nào.</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
